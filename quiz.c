@@ -15,7 +15,7 @@ void getCurrentDate(char* dateStr) {
 void displayMainMenu() {
     printf("\n=== MAIN MENU ===\n");
     printf("1. Start Quiz\n");
-    printf("2. Choose Quiz Mode\n");
+    printf("2. Quiz Settings\n");
     printf("3. View Past Scores\n");
     printf("4. Help\n");
     printf("5. Exit\n");
@@ -47,43 +47,44 @@ void chooseQuizMode() {
         return;
     }
     while (getchar() != '\n'); // clear buffer
-
-    switch (choice) {
-        case 1:
-            isTimedMode = !isTimedMode;
-            if (isTimedMode) {
-                printf("Enter time per question (sec): ");
-                scanf("%d", &timeLimitPerQuestion);
-                while (getchar() != '\n');
-            } else {
+         
+        switch (choice) {
+            case 1:
+                isTimedMode = !isTimedMode;
+                if (isTimedMode) {
+                    printf("Enter time per question (sec): ");
+                    scanf("%d", &timeLimitPerQuestion);
+                    while (getchar() != '\n');
+                } else {
+                    timeLimitPerQuestion = 0;
+                }
+                break;
+            case 2:
+                printf("Enter topic (or 'All'): ");
+                fgets(selectedTopic, sizeof(selectedTopic), stdin);
+                selectedTopic[strcspn(selectedTopic, "\n")] = 0;
+                break;
+            case 3:
+                isRandomMode = !isRandomMode;
+                break;
+            case 4:
+                printf("Enter difficulty (Easy/Medium/Hard or 'All'): ");
+                fgets(selectedDifficulty, sizeof(selectedDifficulty), stdin);
+                selectedDifficulty[strcspn(selectedDifficulty, "\n")] = 0;
+                break;
+            case 5:
+                strcpy(selectedTopic, "All Topics");
+                strcpy(selectedDifficulty, "All");
+                isTimedMode = 0;
+                isRandomMode = 0;
                 timeLimitPerQuestion = 0;
-            }
-            break;
-        case 2:
-            printf("Enter topic (or 'All'): ");
-            fgets(selectedTopic, sizeof(selectedTopic), stdin);
-            selectedTopic[strcspn(selectedTopic, "\n")] = 0;
-            break;
-        case 3:
-            isRandomMode = !isRandomMode;
-            break;
-        case 4:
-            printf("Enter difficulty (Easy/Medium/Hard or 'All'): ");
-            fgets(selectedDifficulty, sizeof(selectedDifficulty), stdin);
-            selectedDifficulty[strcspn(selectedDifficulty, "\n")] = 0;
-            break;
-        case 5:
-            strcpy(selectedTopic, "All Topics");
-            strcpy(selectedDifficulty, "All");
-            isTimedMode = 0;
-            isRandomMode = 0;
-            timeLimitPerQuestion = 0;
-            break;
-        case 6:
-            return;
-        default:
-            printf("Invalid choice.\n");
-    }
+                break;
+            case 6:
+                return;
+            default:
+                printf("Invalid choice.\n");
+        }
+   
 }
 
 // ===================================================
